@@ -106,9 +106,17 @@ namespace BingeCode
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
-        public const uint WM_ACTIVATE = 0x0006;
-        public const int  WA_ACTIVE   = 1;
-        public const uint WM_SETFOCUS = 0x0007;
+        public const uint WM_ACTIVATE    = 0x0006;
+        public const int  WA_ACTIVE      = 1;
+        public const uint WM_SETFOCUS    = 0x0007;
+        public const uint WM_NCACTIVATE  = 0x0086;
+        public const uint WM_ACTIVATEAPP = 0x001C;
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsIconic(IntPtr hWnd);
+
+        public const int SW_SHOWNOACTIVATE = 4;
 
         // ── Window capture ───────────────────────────────────────────────────
 

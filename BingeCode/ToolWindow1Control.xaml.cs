@@ -99,24 +99,47 @@ namespace BingeCode
                 _miniBarTimer.Stop();
             };
 
-            // Fire every 800 ms while a source window is mirrored.
-            // WM_ACTIVATE + WM_SETFOCUS sent to both the DWM source (render widget)
-            // and the browser top-level window keeps the Page Visibility API from
-            // firing and fights Chrome's OcclusionTracker throttling.
-            _keepAliveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(800) };
+            // Fire every 400 ms while a source window is mirrored (matching Chrome's
+            // OcclusionTracker period). Multiple messages are posted to fight the two
+            // main throttling mechanisms in Chromium-based apps (Chrome, Stremio/NW.js):
+            //   WM_ACTIVATEAPP  – application-level activation; resets Chrome's app-active flag.
+            //   WM_ACTIVATE     – keeps the Page Visibility API from firing "hidden".
+            //   WM_NCACTIVATE   – what Chrome's HWNDMessageHandler tracks as is_active_;
+            //                     lParam = -1 suppresses non-client repaint flicker.
+            //   WM_SETFOCUS     – secondary guard against input throttling.
+            // The render widget child (Chrome_RenderWidgetHostHWND) is also pinged because
+            // Chrome's OcclusionTracker evaluates occlusion per render widget, not just the
+            // top-level HWND. If the source window is minimized it is silently restored
+            // (SW_SHOWNOACTIVATE) so Chromium resumes its renderer without stealing focus.
+            _keepAliveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(400) };
             _keepAliveTimer.Tick += (s, e) =>
             {
                 void Ping(IntPtr hwnd)
                 {
                     if (hwnd == IntPtr.Zero) return;
+                    if (NativeMethods.IsIconic(hwnd))
+                        NativeMethods.ShowWindow(hwnd, NativeMethods.SW_SHOWNOACTIVATE);
+                    NativeMethods.PostMessage(hwnd, NativeMethods.WM_ACTIVATEAPP,
+                        new IntPtr(1), IntPtr.Zero);
                     NativeMethods.PostMessage(hwnd, NativeMethods.WM_ACTIVATE,
                         new IntPtr(NativeMethods.WA_ACTIVE), IntPtr.Zero);
+                    NativeMethods.PostMessage(hwnd, NativeMethods.WM_NCACTIVATE,
+                        new IntPtr(1), new IntPtr(-1));
                     NativeMethods.PostMessage(hwnd, NativeMethods.WM_SETFOCUS,
                         IntPtr.Zero, IntPtr.Zero);
                 }
                 Ping(_sourceHwnd);
                 if (_browserTopLevelHwnd != _sourceHwnd)
                     Ping(_browserTopLevelHwnd);
+                // Ping the Chromium render widget directly — Chrome's OcclusionTracker
+                // tracks occlusion per render widget, not just the top-level window.
+                if (_sourceHwnd != IntPtr.Zero)
+                {
+                    IntPtr renderHwnd = FindLargestChildByClass(
+                        _sourceHwnd, "Chrome_RenderWidgetHostHWND");
+                    if (renderHwnd != IntPtr.Zero)
+                        Ping(renderHwnd);
+                }
             };
 
             RefreshWindowList();
