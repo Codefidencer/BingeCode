@@ -4,7 +4,7 @@
     <Platform Name="arm64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="DevFlix/DevFlix.csproj" Id="3814ba99-22f5-42c3-bc21-293d5d5c4f16">
+  <Project Path="BingeCode/BingeCode.csproj" Id="3814ba99-22f5-42c3-bc21-293d5d5c4f16">
     <Platform Solution="*|arm64" Project="arm64" />
     <Platform Solution="*|x86" Project="x86" />
   </Project>
