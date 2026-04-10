@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
-namespace DevFlix
+namespace BingeCode
 {
     /// <summary>
     /// Command handler
@@ -22,7 +22,7 @@ namespace DevFlix
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("e205f0af-abfc-482b-96f3-a8354212551a");
+        public static readonly Guid CommandSet = new Guid("b58a2b2c-67a1-4e28-8b64-df0d532602ec");
 
         /// <summary>
         /// VS Package that provides this command, not null.

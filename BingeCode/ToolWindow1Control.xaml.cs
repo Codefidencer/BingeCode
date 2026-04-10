@@ -13,14 +13,14 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 
-namespace DevFlix
+namespace BingeCode
 {
     public partial class ToolWindow1Control : UserControl
     {
         private bool             _isBorderless;
         private IntPtr           _thumbnailHandle  = IntPtr.Zero;
         private IntPtr           _sourceHwnd       = IntPtr.Zero;
-        // Original top-level window the user picked — used for UIA & keep-alive.
+        // Original top-level window the user picked, used for UIA & keep-alive.
         // May differ from _sourceHwnd when we switch to the render-widget child.
         private IntPtr           _browserTopLevelHwnd = IntPtr.Zero;
         // Best crop rect found via UIA (document or video element). Screen pixels.
@@ -31,7 +31,7 @@ namespace DevFlix
         private Window           _fullscreenOverlay  = null;
         private IntPtr           _overlayThumbHandle = IntPtr.Zero;
         private Border           _overlayExitBar     = null;
-        // VS root HWND and its saved rect — restored when exiting fullscreen
+        // VS root HWND and its saved rect, restored when exiting fullscreen
         private IntPtr           _overlayRootHwnd    = IntPtr.Zero;
         private NativeMethods.RECT _savedVsRect;
 
@@ -78,7 +78,7 @@ namespace DevFlix
             "NVDisplay.Container",
         };
 
-        // Own process ID — never include VS itself in the picker.
+        // Own process ID, never include VS itself in the picker.
         private static readonly int OwnPid = Process.GetCurrentProcess().Id;
 
 
@@ -130,7 +130,7 @@ namespace DevFlix
                 // Store WebView2 user data alongside other VS extension data.
                 string dataDir = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "DevFlix", "WebView2");
+                    "BingeCode", "WebView2");
                 Directory.CreateDirectory(dataDir);
                 var env = await CoreWebView2Environment.CreateAsync(null, dataDir);
                 await Browser.EnsureCoreWebView2Async(env);
@@ -139,7 +139,7 @@ namespace DevFlix
                 Browser.CoreWebView2.Settings.AreDefaultContextMenusEnabled  = false;
                 Browser.CoreWebView2.Settings.AreDevToolsEnabled             = false;
             }
-            catch { /* WebView2 runtime unavailable — URL navigation will silently fail */ }
+            catch { /* WebView2 runtime unavailable, URL navigation will silently fail */ }
         }
 
         // ── Window picker ────────────────────────────────────────────────────
@@ -200,8 +200,8 @@ namespace DevFlix
             if (WindowPicker.SelectedItem is WindowInfo info && info.Handle != IntPtr.Zero)
             {
                 var result = MessageBox.Show(
-                    $"Mirror \"{info.Title}\" inside DevFlix?\n\nThe original window stays where it is.",
-                    "DevFlix — Confirm",
+                    $"Mirror \"{info.Title}\" inside BingeCode?\n\nThe original window stays where it is.",
+                    "BingeCode: Confirm",
                     MessageBoxButton.OKCancel,
                     MessageBoxImage.Question);
 
@@ -238,7 +238,7 @@ namespace DevFlix
             {
                 MessageBox.Show(
                     "Could not mirror that window. Try a different one.",
-                    "DevFlix", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    "BingeCode", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -282,7 +282,7 @@ namespace DevFlix
                         UpdateThumbnailPosition();
                     }));
 
-                // Phase 2: motion detection — finds the animated region (video)
+                // Phase 2: motion detection, finds the animated region (video)
                 // regardless of browser, streaming service, or UIA state.
                 // rootHwnd is passed so the method can cloak VS during capture,
                 // preventing Chrome's OcclusionTracker from freezing the video.
@@ -402,7 +402,7 @@ namespace DevFlix
 
         // Phase 1: returns the bounding rect of the browser's Document element
         // (the page content area, which excludes the tab bar and address bar).
-        // Works for both Chromium and Firefox/Zen. Fast — no retry needed.
+        // Works for both Chromium and Firefox/Zen. Fast, no retry needed.
         private static System.Windows.Rect FindDocumentRect(IntPtr sourceHwnd)
         {
             var cond = new System.Windows.Automation.PropertyCondition(
@@ -470,7 +470,7 @@ namespace DevFlix
                     if (!best.IsEmpty) return best;
 
                     // Chrome's render widget may surface elements the top-level
-                    // UIA tree misses — try the largest Chrome_RenderWidgetHostHWND child
+                    // UIA tree misses, try the largest Chrome_RenderWidgetHostHWND child
                     IntPtr renderHwnd = FindLargestChildByClass(
                         sourceHwnd, "Chrome_RenderWidgetHostHWND");
                     if (renderHwnd != IntPtr.Zero)
@@ -516,7 +516,7 @@ namespace DevFlix
         //
         // vsHwndToCloak: pass the VS root HWND when VS is NOT already cloaked.
         //   This temporarily cloaks VS so Chrome's OcclusionTracker stops seeing
-        //   it as covering Chrome — otherwise Chrome freezes rendering and both
+        //   it as covering Chrome, otherwise Chrome freezes rendering and both
         //   frames are identical (no diff, no result).
         //   Pass IntPtr.Zero when VS is already cloaked (e.g. fullscreen mode).
         private static System.Windows.Rect DetectVideoRectByMotion(
@@ -532,7 +532,7 @@ namespace DevFlix
             bool didCloak = false;
             try
             {
-                // Prefer render widget — excludes browser chrome from capture
+                // Prefer render widget, excludes browser chrome from capture
                 IntPtr captureHwnd = FindLargestChildByClass(
                     sourceHwnd, "Chrome_RenderWidgetHostHWND");
                 if (captureHwnd == IntPtr.Zero)
@@ -672,7 +672,7 @@ namespace DevFlix
                 NativeMethods.DeleteObject(captureBmp);
                 NativeMethods.DeleteDC(captureDC);
 
-                // Downsample — orientation is consistent across both frames so
+                // Downsample, orientation is consistent across both frames so
                 // bottom-up vs top-down doesn't affect the diff result.
                 byte[] result = new byte[sampleW * sampleH * 4];
                 for (int dy = 0; dy < sampleH; dy++)
@@ -719,10 +719,10 @@ namespace DevFlix
         // Finds the main content-area rect of the source window.
         // Strategy:
         //   1. Known renderer class names (Chrome, Firefox/Gecko).
-        //   2. Largest visible child HWND by area — works for NW.js (Stremio),
+        //   2. Largest visible child HWND by area, works for NW.js (Stremio),
         //      CEF, Electron variants, and any future framework.
         //   3. Full client area fallback.
-        // Phase 0: get the render-widget screen rect via Win32 — no UIA, no delays.
+        // Phase 0: get the render-widget screen rect via Win32, no UIA, no delays.
         // Strips Chrome/Edge/Firefox browser chrome instantly.
         private static System.Windows.Rect FindContentHwndRect(IntPtr sourceHwnd)
         {
@@ -861,7 +861,7 @@ namespace DevFlix
                 else
                 {
                     MessageBox.Show("Only http:// and https:// URLs are allowed.",
-                        "DevFlix — Blocked URL", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        "BingeCode: Blocked URL", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
             }
@@ -869,7 +869,7 @@ namespace DevFlix
             if (!Uri.TryCreate(trimmed, UriKind.Absolute, out Uri uri))
             {
                 MessageBox.Show("The URL is not valid.",
-                    "DevFlix — Invalid URL", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    "BingeCode: Invalid URL", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -887,7 +887,7 @@ namespace DevFlix
         {
             var dialog = new OpenFileDialog
             {
-                Title  = "Open video file — </DevFlix>",
+                Title  = "Open video file: BingeCode",
                 Filter = "Video files|*.mp4;*.avi;*.mkv;*.mov;*.wmv;*.webm;*.flv|All files|*.*"
             };
 
@@ -897,14 +897,14 @@ namespace DevFlix
             if (!AllowedVideoExtensions.Contains(ext))
             {
                 MessageBox.Show($"File type \"{ext}\" is not allowed.",
-                    "DevFlix — Blocked File", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    "BingeCode: Blocked File", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (!Path.IsPathRooted(dialog.FileName) || !File.Exists(dialog.FileName))
             {
                 MessageBox.Show("The selected file could not be verified.",
-                    "DevFlix — Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    "BingeCode: Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -971,7 +971,7 @@ namespace DevFlix
                 else
                 {
                     // Browser / placeholder mode: no overlay window.
-                    // Show the in-pane MiniBar exit strip. Don't auto-hide it —
+                    // Show the in-pane MiniBar exit strip. Don't auto-hide it,
                     // WebView2 swallows mouse events so we can't detect movement
                     // inside the browser to re-show it once hidden.
                     MiniBar.Visibility = Visibility.Visible;
@@ -1001,7 +1001,7 @@ namespace DevFlix
             _overlayRootHwnd = rootHwnd;
             _savedVsRect     = rootRect;   // restored when exiting fullscreen
 
-            // Exit bar — shown for 3 s on entry, auto-hides, reappears on mouse move.
+            // Exit bar, shown for 3 s on entry, auto-hides, reappears on mouse move.
             // Transparent background so only the button text floats over the video.
             _overlayExitBar = new Border
             {
@@ -1056,7 +1056,7 @@ namespace DevFlix
                     GlassFrameThickness    = new Thickness(0)
                 });
 
-            // No Owner — owner relationship causes VS to surface above the overlay
+            // No Owner, owner relationship causes VS to surface above the overlay
             // during the native resize modal loop. Topmost=true is sufficient.
 
             // Drag anywhere on the video with a small movement threshold so
@@ -1105,7 +1105,7 @@ namespace DevFlix
             _fullscreenOverlay.Activate();
 
             // Cloak VS's main window so DWM stops compositing it. Chrome's
-            // OcclusionTracker detects coverage by opaque windows — with VS cloaked,
+            // OcclusionTracker detects coverage by opaque windows, with VS cloaked,
             // Chrome is no longer "occluded" and keeps rendering the video.
             NativeMethods.DwmSetWindowAttribute(
                 rootHwnd, NativeMethods.DWMWA_CLOAK, 1, 4);
@@ -1245,7 +1245,7 @@ namespace DevFlix
             IntPtr current   = hwndSource.Handle;
 
             // Walk up the HWND parent chain, stopping before the VS root window.
-            // At each level hide sibling child windows — these are the title bar,
+            // At each level hide sibling child windows, these are the title bar,
             // grip, and button controls drawn by VS around our content.
             while (true)
             {
@@ -1313,7 +1313,7 @@ namespace DevFlix
             ThumbnailArea.Visibility = Visibility.Collapsed;
             Browser.Visibility       = Visibility.Collapsed;
             Placeholder.Visibility   = Visibility.Visible;
-            PlaceholderTitle.Text    = "</DevFlix>";
+            PlaceholderTitle.Text    = "</BingeCode>";
             PlaceholderHint.Text     = "Pick a video window above, paste a URL, or open a local file.";
         }
     }

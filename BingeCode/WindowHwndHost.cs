@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
-namespace DevFlix
+namespace BingeCode
 {
     /// <summary>
     /// Embeds a native Windows window (HWND) inside a WPF layout using HwndHost.

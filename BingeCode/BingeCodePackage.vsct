@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <!--  This is the file that defines the actual layout and type of the commands.
@@ -22,7 +22,7 @@
 
   <!--The Commands section is where commands, menus, and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
-  <Commands package="guidDevFlixPackage">
+  <Commands package="guidBingeCodePackage">
     <!-- Inside this section we have different sub-sections: one for the menus, another
     for the menu groups, one for the buttons (the actual commands), one for the combos
     and the last one for the bitmaps used. Each element is identified by a command id that
@@ -42,11 +42,11 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidDevFlixPackageCmdSet" id="ToolWindow1CommandId" priority="0x0100" type="Button">
+      <Button guid="guidBingeCodePackageCmdSet" id="ToolWindow1CommandId" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>DevFlix</ButtonText>
+          <ButtonText>BingeCode</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -64,10 +64,10 @@
 
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidDevFlixPackage" value="{645fc830-4b16-42f1-8ca4-859227eb8939}" />
+    <GuidSymbol name="guidBingeCodePackage" value="{e9b5e54c-c718-45a7-b7d7-743a86edc3a8}" />
 
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidDevFlixPackageCmdSet" value="{e205f0af-abfc-482b-96f3-a8354212551a}">
+    <GuidSymbol name="guidBingeCodePackageCmdSet" value="{b58a2b2c-67a1-4e28-8b64-df0d532602ec}">
       <IDSymbol name="ToolWindow1CommandId" value="0x0100" />
     </GuidSymbol>
 

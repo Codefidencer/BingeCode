@@ -36,13 +36,15 @@
   <text
     x="100" y="94"
     font-family="'Courier New', 'Consolas', 'Lucida Console', monospace"
-    font-size="30"
+    font-size="22"
     font-weight="700"
     fill="url(#redGrad)"
     text-anchor="middle"
     filter="url(#glow)"
     letter-spacing="-0.5"
-  >&lt;/DevFlix&gt;</text>
+    textLength="172"
+    lengthAdjust="spacingAndGlyphs"
+  >&lt;/BingeCode&gt;</text>
 
   <!-- Tagline -->
   <text

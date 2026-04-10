@@ -1,6 +1,6 @@
 using System;
 
-namespace DevFlix
+namespace BingeCode
 {
     public class WindowInfo
     {

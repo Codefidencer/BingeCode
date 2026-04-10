@@ -4,15 +4,15 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Task = System.Threading.Tasks.Task;
 
-namespace DevFlix
+namespace BingeCode
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [Guid(DevFlixPackage.PackageGuidString)]
+    [Guid(BingeCodePackage.PackageGuidString)]
     [ProvideToolWindow(typeof(ToolWindow1))]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    public sealed class DevFlixPackage : AsyncPackage
+    public sealed class BingeCodePackage : AsyncPackage
     {
-        public const string PackageGuidString = "645fc830-4b16-42f1-8ca4-859227eb8939";
+        public const string PackageGuidString = "e9b5e54c-c718-45a7-b7d7-743a86edc3a8";
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {

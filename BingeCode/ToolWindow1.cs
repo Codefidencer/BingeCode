@@ -2,14 +2,14 @@ using Microsoft.VisualStudio.Shell;
 using System;
 using System.Runtime.InteropServices;
 
-namespace DevFlix
+namespace BingeCode
 {
-    [Guid("ef25525d-eec1-47b6-a659-c4df56ff2721")]
+    [Guid("cc072ec8-e6cb-49c9-a058-a62e552f5f85")]
     public class ToolWindow1 : ToolWindowPane
     {
         public ToolWindow1() : base(null)
         {
-            this.Caption = "</DevFlix>";
+            this.Caption = "BingeCode";
             this.Content = new ToolWindow1Control();
         }
     }
