@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#FF0F1A"/>
+      <stop offset="100%" stop-color="#B20710"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#bgGrad)" rx="6"/>
+
+  <!-- Left accent stripe -->
+  <rect x="0" y="0" width="6" height="200" fill="url(#redGrad)" rx="3 0 0 3"/>
+
+  <!-- Right accent stripe -->
+  <rect x="194" y="0" width="6" height="200" fill="url(#redGrad)" rx="0 3 3 0"/>
+
+  <!-- Top accent stripe -->
+  <rect x="6" y="0" width="188" height="4" fill="#E50914" opacity="0.6"/>
+
+  <!-- Bottom accent stripe -->
+  <rect x="6" y="196" width="188" height="4" fill="#E50914" opacity="0.6"/>
+
+  <!-- Subtle horizontal rule -->
+  <line x1="18" y1="100" x2="182" y2="100" stroke="#E50914" stroke-width="0.4" opacity="0.15"/>
+
+  <!-- Main logotype -->
+  <text
+    x="100" y="94"
+    font-family="'Courier New', 'Consolas', 'Lucida Console', monospace"
+    font-size="30"
+    font-weight="700"
+    fill="url(#redGrad)"
+    text-anchor="middle"
+    filter="url(#glow)"
+    letter-spacing="-0.5"
+  >&lt;/DevFlix&gt;</text>
+
+  <!-- Tagline -->
+  <text
+    x="100" y="122"
+    font-family="'Segoe UI', 'Arial', sans-serif"
+    font-size="9"
+    font-weight="400"
+    fill="#ffffff"
+    text-anchor="middle"
+    opacity="0.38"
+    letter-spacing="3.5"
+  >WATCH WHILE YOU CODE</text>
+</svg>

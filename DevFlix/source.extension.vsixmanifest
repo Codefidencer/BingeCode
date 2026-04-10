@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+    <Metadata>
+        <Identity Id="DevFlix.b07f8c57-84b7-4dc4-8e03-8a7f4e62fd76" Version="1.0" Language="en-US" Publisher="Codefidencer" />
+        <DisplayName>DevFlix</DisplayName>
+        <Description xml:space="preserve">Watch Netflix, YouTube, or any video directly inside Visual Studio — no alt-tabbing required.
+
+DevFlix mirrors any browser or media player window into a VS tool window using hardware-accelerated DWM thumbnails. It automatically crops to the video area only, stripping browser chrome and sidebars. Works with Chrome, Firefox, Edge, VLC, Stremio, MPC, and more.
+
+Features:
+• Mirror any visible window — live, hardware-accelerated, zero CPU overhead
+• Video-only crop — UI Automation strips browser chrome automatically
+• Keep-alive — prevents browsers from throttling background tabs
+• Fullscreen mode — F11 or double-click fills the entire panel
+• Embedded browser — paste any URL or open a local file directly inside VS
+• Broad app support — Chromium, Firefox/Zen, VLC, Stremio, Kodi, Discord</Description>
+        <Icon>Resources\icon.png</Icon>
+        <Tags>video;media;youtube;netflix;streaming;tool window;productivity;entertainment;browser;vlc</Tags>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, )">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Id="Microsoft.VisualStudio.Professional" Version="[17.0, )">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.0, )">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    </Dependencies>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0, )" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    </Assets>
+</PackageManifest>
