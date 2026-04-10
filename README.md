@@ -23,6 +23,8 @@ BingeCode mirrors any browser or media player window into a VS tool window using
 
 Install directly from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/), search for **BingeCode**.
 
+After installing, open the tool window via **View → Other Windows → BingeCode**.
+
 **From source**
 
 1. Clone this repository
