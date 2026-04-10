@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="BingeCode.BingeCode.03d42d18-a11e-4f69-93a3-09734bb46983" Version="1.0.0" Language="en-US" Publisher="BingeCode" />
+        <Identity Id="BingeCode.BingeCode.03d42d18-a11e-4f69-93a3-09734bb46983" Version="1.0.1" Language="en-US" Publisher="BingeCode" />
         <DisplayName>BingeCode</DisplayName>
         <Description xml:space="preserve">Watch any video or media directly inside Visual Studio, no alt-tabbing required.
 

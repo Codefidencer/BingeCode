@@ -92,7 +92,9 @@
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="Resources\ToolWindow1Command.png" />
-    <Content Include="Resources\icon.png" />
+    <Content Include="Resources\icon.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <!-- WebView2 native loader, must live next to the extension DLL in the VSIX -->
   <ItemGroup>
