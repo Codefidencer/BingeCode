@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              Background="#141414"
-             Foreground="#FFFFFF"
+             Foreground="#141414"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="400"
              Name="MyToolWindow"
@@ -195,7 +195,7 @@
                 <TextBox x:Name="UrlInput" Grid.Column="0"
                          Style="{StaticResource BingeCodeTextBox}"
                          KeyDown="UrlInput_KeyDown"
-                         ToolTip="Paste a URL, opens in your browser and auto-mirrors"/>
+                         ToolTip="Paste a URL, or navigate the world wide web"/>
 
                 <Button Grid.Column="1" Content="Go" Width="36" Margin="4,0,0,0"
                         Style="{StaticResource BingeCodeButton}"
